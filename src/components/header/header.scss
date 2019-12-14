@@ -1,0 +1,14 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0.4rem 0;
+    .todo-count {
+        color: #7D7F7C;
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+        font-weight: bold;
+        padding: 0.4rem 0.6rem;
+        word-spacing: -0.15rem;
+    }
+}
