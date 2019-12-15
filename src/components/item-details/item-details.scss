@@ -7,13 +7,21 @@
     .label {
         font-size: 1.2rem;
         line-height: 1.5rem;
-        font-weight: bold;
         padding: 0.15rem 0;
         margin-left: 1.3rem;
+        flex-grow: 2;
     }
     button {
         min-width: 38px;
         margin: 0 4px 0 0;
         font-weight: bold;
+        flex-grow: 1;
+    }
+    .completed {
+        text-decoration: line-through;
+    }
+    .important{
+        font-weight: bold;
+        color: #375D85;
     }
 }
