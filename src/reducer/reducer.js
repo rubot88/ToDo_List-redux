@@ -5,7 +5,8 @@ const reducer = (state, action) => {
                 { id: 1, label: 'Drink Coffee', complete: true, important: false },
                 { id: 2, label: 'Learn React', complete: false, important: true },
                 { id: 3, label: 'Make Awesome App', complete: false, important: false }
-            ]
+            ],
+            labelValue: ''
         }
     }
     const { items } = state;
@@ -18,7 +19,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 items: newItems
-            }
+            };
         }
         case 'ITEM_MARKED_IMPORTANT': {
             const newItems = items
@@ -26,8 +27,9 @@ const reducer = (state, action) => {
                     ({ ...item, important: !item.important }) :
                     ({ ...item }));
             return {
+                ...state,
                 items: newItems
-            }
+            };
         }
 
         case 'ITEM_REMOVED_FROM_LIST': {
@@ -38,8 +40,33 @@ const reducer = (state, action) => {
             ]
 
             return {
+                ...state,
                 items: newItems
+            };
+        }
+        case 'ITEM_ADDED_TO_LIST': {
+            const { labelValue: label } = state;
+            if (label === '') {
+                return {
+                    ...state
+                }
             }
+            const newItem = { id: Date.now(), label, complete: false, important: false };
+            const newItems = [
+                ...items,
+                newItem
+            ];
+            return {
+                items: newItems,
+                labelValue: ''
+            }
+        }
+        case 'FORM_LABEL_CHANGED': {
+            const labelValue = action.payload.target.value;
+            return {
+                ...state,
+                labelValue
+            };
         }
         default:
             return state;
