@@ -4,6 +4,7 @@ import Header from '../header';
 import Search from '../search';
 import Filter from '../filter';
 import ItemList from '../item-list';
+import AddItemForm from '../add-item-form';
 
 import './app.scss';
 
@@ -18,6 +19,7 @@ const App = () => {
                     <Filter />
                 </div>
                 <ItemList />
+                <AddItemForm />
             </main>
         </div>
     );

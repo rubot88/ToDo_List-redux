@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-import './filter.scss';
-
-
 class Filter extends Component {
     state = {
         buttons: [
@@ -26,7 +23,7 @@ class Filter extends Component {
             );
         });
         return (
-            <div className="filter btn-group">
+            <div className="btn-group">
                 {buttons}
             </div>
         );
