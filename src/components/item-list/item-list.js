@@ -1,81 +1,52 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import ItemDetails from '../item-details';
+import * as actions from '../../actions';
 
 import './item-list.scss';
 
 
-class componentName extends Component {
-    state = {
-        items: [
-            { id: 1, label: 'Drink Coffee', complete: true, important: false },
-            { id: 2, label: 'Learn React', complete: false, important: false },
-            { id: 3, label: 'Make Awesome App', complete: false, important: false }
-        ]
-    }
-
-    onItemComplete = (id) => {
-        this.setState(({ items }) => {
-            const newItems = items
-                .map(item => item.id === id ?
-                    ({ ...item, complete: !item.complete }) :
-                    ({ ...item }));
-            return {
-                items: newItems
-            }
-        });
-    }
-
-    onImportant = (id) => {
-        this.setState(({ items }) => {
-            const newItems = items
-                .map(item => item.id === id ?
-                    ({ ...item, important: !item.important }) :
-                    ({ ...item }));
-            return {
-                items: newItems
-            }
-        })
-    }
-
-    onDelete = (id) => {
-        this.setState(({ items }) => {
-            const idx = items.findIndex(item => item.id === id);
-            const newItems = [
-                ...items.slice(0, idx),
-                ...items.slice(idx + 1)
-            ]
-
-            return {
-                items: newItems
-            }
-        })
-    }
-
-    render() {
-
-        const { items } = this.state;
-        const renderItems = items.map(({ id, label, complete, important }) => {
-            return (
-                <li
-                    className="item list-group-item"
-                    key={id}>
-                    <ItemDetails
-                        label={label}
-                        isCompleted={complete}
-                        isImportant={important}
-                        onItemComplete={() => this.onItemComplete(id)}
-                        onImportant={() => this.onImportant(id)}
-                        onDelete={()=>this.onDelete(id)} />
-                </li>
-            );
-        });
+const ItemList = ({ items, onItemComplete, onItemImportant, onDeleteItem }) => {
+    const renderItems = items.map(({ id, label, complete, important }) => {
         return (
-            <ul className="item-list list-group">
-                {renderItems}
-            </ul>
-        )
-    }
+            <li
+                className="item list-group-item"
+                key={id}>
+                <ItemDetails
+                    label={label}
+                    isCompleted={complete}
+                    isImportant={important}
+                    onItemComplete={() => onItemComplete(id)}
+                    onImportant={() => onItemImportant(id)}
+                    onDelete={() => onDeleteItem(id)} />
+            </li>
+        );
+    });
+    return (
+        <ul className="item-list list-group" >
+            {renderItems}
+        </ul >
+    )
+};
+
+ItemList.propTypes = {
+    items: PropTypes.array,
+    onItemComplete: PropTypes.func,
+    onItemImportant: PropTypes.func,
+    onDeleteItem: PropTypes.func
 }
 
-export default componentName
+const mapStateToProps = ({ items }) => ({ items });
+const mapDispatchToProps = (dispatch) => {
+    const { onItemComplete, onItemImportant, onDeleteItem } = bindActionCreators(actions, dispatch)
+    return {
+        onItemComplete: (id) => onItemComplete(id),
+        onItemImportant: (id) => onItemImportant(id),
+        onDeleteItem: (id) => onDeleteItem(id)
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
