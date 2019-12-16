@@ -6,7 +6,9 @@ const reducer = (state, action) => {
                 { id: 2, label: 'Learn React', complete: false, important: true },
                 { id: 3, label: 'Make Awesome App', complete: false, important: false }
             ],
-            labelValue: ''
+            labelValue: '',
+            searchValue: '',
+            filter: 'all'
         }
     }
     const { items } = state;
@@ -62,12 +64,27 @@ const reducer = (state, action) => {
             }
         }
         case 'FORM_LABEL_CHANGED': {
-            const labelValue = action.payload.target.value;
+            const labelValue = action.payload;
             return {
                 ...state,
                 labelValue
             };
         }
+        case 'SEARCH_VALUE_CHANGED':
+            return {
+                ...state,
+                searchValue: action.payload
+            };
+        case 'DEFAULT_SEARCH_VALUE':
+            return {
+                ...state,
+                searchValue: ''
+            };
+        case 'FILTER_ITEMS_SET':
+            return {
+                ...state,
+                filter: action.payload
+            };
         default:
             return state;
     }

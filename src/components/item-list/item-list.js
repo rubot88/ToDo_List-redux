@@ -39,7 +39,27 @@ ItemList.propTypes = {
     onDeleteItem: PropTypes.func
 }
 
-const mapStateToProps = ({ items }) => ({ items });
+const mapStateToProps = ({ items, searchValue, filter }) => {
+    let filtered = [];
+    switch (filter) {
+        case 'active':
+            filtered = items.filter(({ complete }) => !complete);
+            break;
+        case 'done':
+            filtered = items.filter(({ complete }) => complete);
+            break;
+        default:
+            filtered = items;
+    }
+
+    if (searchValue !== '') {
+        filtered = filtered.filter(({ label }) => label.toLowerCase().includes(searchValue.toLowerCase()));
+    }
+
+    return {
+        items: filtered
+    }
+};
 const mapDispatchToProps = (dispatch) => {
     const { onItemComplete, onItemImportant, onDeleteItem } = bindActionCreators(actions, dispatch)
     return {

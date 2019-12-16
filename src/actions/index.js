@@ -20,13 +20,22 @@ const onItemAdded = (event) => ({
 
 const onLabelChange = (event) => ({
     type: 'FORM_LABEL_CHANGED',
-    payload: event
+    payload: event.target.value
 });
+
+const onSearchValueChange = (event) => ({
+    type: 'SEARCH_VALUE_CHANGED',
+    payload: event.target.value
+});
+
+const onSearchBlur = () => ({ type: 'DEFAULT_SEARCH_VALUE' })
 
 export {
     onItemComplete,
     onItemImportant,
     onDeleteItem,
     onItemAdded,
-    onLabelChange
+    onLabelChange,
+    onSearchValueChange,
+    onSearchBlur
 };
