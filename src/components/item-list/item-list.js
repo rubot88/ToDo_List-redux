@@ -10,7 +10,6 @@ import './item-list.scss';
 
 
 const ItemList = ({ items, onItemComplete, onItemImportant, onDeleteItem }) => {
-    console.log(...items);
     const renderItems = items.map(({ id, label, complete, important }) => {
         return (
             <li
@@ -41,7 +40,9 @@ ItemList.propTypes = {
 }
 
 const mapStateToProps = ({ items, searchValue, filterButtons }) => {
-    const filterName = filterButtons.filter(({ name, isActive }) => isActive && name)
+
+    const filterName = filterButtons.find(({ isActive }) => isActive).name;
+
     let filtered = [];
     switch (filterName) {
         case 'Active':

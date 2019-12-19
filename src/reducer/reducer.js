@@ -1,4 +1,5 @@
 const reducer = (state, action) => {
+
     if (state === undefined) {
         return {
             items: [
@@ -86,16 +87,11 @@ const reducer = (state, action) => {
                 ...state,
                 searchValue: ''
             };
-        case 'FILTER_ITEMS_SET':
-            return {
-                ...state,
-                filter: action.payload
-            };
         case 'FILTER_VALUE_CHANGED': {
             const newFilterButtons = filterButtons
                 .map(({ name }) => name === action.payload ?
                     ({ name, isActive: true }) :
-                    ({ name, isActive: false }))
+                    ({ name, isActive: false }));
             return {
                 ...state,
                 filterButtons: newFilterButtons
