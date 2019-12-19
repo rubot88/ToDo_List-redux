@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import * as actions from '../../actions';
 
@@ -20,6 +21,11 @@ const Search = ({ searchValue, onSearchValueChange, onSearchBlur }) => {
     );
 };
 
+Search.propTypes = {
+    searchValue: PropTypes.string.isRequired,
+    onSearchValueChange: PropTypes.func.isRequired,
+    onSearchBlur: PropTypes.func.isRequired
+}
 const mapStateToProps = ({ searchValue }) => {
     return {
         searchValue

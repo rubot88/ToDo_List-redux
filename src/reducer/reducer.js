@@ -6,12 +6,16 @@ const reducer = (state, action) => {
                 { id: 2, label: 'Learn React', complete: false, important: true },
                 { id: 3, label: 'Make Awesome App', complete: false, important: false }
             ],
+            filterButtons: [
+                { name: 'All', isActive: true },
+                { name: 'Active', isActive: false },
+                { name: 'Done', isActive: false }
+            ],
             labelValue: '',
-            searchValue: '',
-            filter: 'all'
+            searchValue: ''
         }
     }
-    const { items } = state;
+    const { items, filterButtons } = state;
     switch (action.type) {
         case 'ITEM_MARKED_COMPLETE': {
             const newItems = items
@@ -53,12 +57,14 @@ const reducer = (state, action) => {
                     ...state
                 }
             }
-            const newItem = { id: Date.now(), label, complete: false, important: false };
+            const newId = items.length ? items[items.length - 1].id + 1 : 1;
+            const newItem = { id: newId, label, complete: false, important: false };
             const newItems = [
                 ...items,
                 newItem
             ];
             return {
+                ...state,
                 items: newItems,
                 labelValue: ''
             }
@@ -85,6 +91,16 @@ const reducer = (state, action) => {
                 ...state,
                 filter: action.payload
             };
+        case 'FILTER_VALUE_CHANGED': {
+            const newFilterButtons = filterButtons
+                .map(({ name }) => name === action.payload ?
+                    ({ name, isActive: true }) :
+                    ({ name, isActive: false }))
+            return {
+                ...state,
+                filterButtons: newFilterButtons
+            };
+        }
         default:
             return state;
     }

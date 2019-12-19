@@ -10,6 +10,7 @@ import './item-list.scss';
 
 
 const ItemList = ({ items, onItemComplete, onItemImportant, onDeleteItem }) => {
+    console.log(...items);
     const renderItems = items.map(({ id, label, complete, important }) => {
         return (
             <li
@@ -39,13 +40,14 @@ ItemList.propTypes = {
     onDeleteItem: PropTypes.func
 }
 
-const mapStateToProps = ({ items, searchValue, filter }) => {
+const mapStateToProps = ({ items, searchValue, filterButtons }) => {
+    const filterName = filterButtons.filter(({ name, isActive }) => isActive && name)
     let filtered = [];
-    switch (filter) {
-        case 'active':
+    switch (filterName) {
+        case 'Active':
             filtered = items.filter(({ complete }) => !complete);
             break;
-        case 'done':
+        case 'Done':
             filtered = items.filter(({ complete }) => complete);
             break;
         default:
@@ -53,7 +55,10 @@ const mapStateToProps = ({ items, searchValue, filter }) => {
     }
 
     if (searchValue !== '') {
-        filtered = filtered.filter(({ label }) => label.toLowerCase().includes(searchValue.toLowerCase()));
+        filtered = filtered
+            .filter(({ label }) => label
+                .toLowerCase()
+                .includes(searchValue.toLowerCase()));
     }
 
     return {

@@ -28,7 +28,12 @@ const onSearchValueChange = (event) => ({
     payload: event.target.value
 });
 
-const onSearchBlur = () => ({ type: 'DEFAULT_SEARCH_VALUE' })
+const onSearchBlur = () => ({ type: 'DEFAULT_SEARCH_VALUE' });
+
+const onFilterChanged = (name) => ({
+    type: 'FILTER_VALUE_CHANGED',
+    payload: name
+})
 
 export {
     onItemComplete,
@@ -37,5 +42,6 @@ export {
     onItemAdded,
     onLabelChange,
     onSearchValueChange,
-    onSearchBlur
+    onSearchBlur,
+    onFilterChanged
 };
