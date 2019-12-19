@@ -1,17 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import './header.scss';
 
-const Header = () => {
+const Header = ({ items }) => {
+    let todo = 0,
+        done = 0;
+    items.forEach(({ complete }) => complete ? done++ : todo++);
     return (
         <header className="header">
             <h1>Todo List</h1>
             <div className="todo-count">
-                <span>3 more to do, 0 done</span>
+                <span>{todo} more to do, {done} done</span>
             </div>
 
         </header>
     );
 };
 
-export default Header;
+Header.propTypes = {
+    items: PropTypes.array
+}
+
+const mapStateToProps = ({ items }) => ({ items });
+
+export default connect(mapStateToProps)(Header);
